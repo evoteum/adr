@@ -64,6 +64,12 @@ templates, aims to make them easier to create and maintain.
 
 - [Install](#install)
 - [Usage](#usage)
+    - [Getting started](#getting-started)
+    - [Templates](#templates)
+        - [Nygard](#nygard)
+        - [Extended](#extended)
+    - [Configuration](#configuration)
+    - [Commands](#commands)
 - [Documentation](#documentation)
 - [Repository Configuration](#repository-configuration)
 - [Contributing](#contributing)
