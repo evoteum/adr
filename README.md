@@ -37,7 +37,22 @@ CLI to manage Architecture Decision Records
 [//]: # (Must not have its own title)
 [//]: # (A detailed description of the repo)
 
+As defined by Michael Nygard in the 2011 article
+[Documenting Architecture Decisions](https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions),
 
+> An architecture decision record is a short text file in a format similar to an 
+> Alexandrian pattern.
+
+Decision records are of vital importance as they prevent the, "We have always done 
+it this way," problem. They allow teams to reassess whether a decision is still 
+valid or whether a different option might be more appropriate.
+
+The format can also be extended beyond architecture decisions by treating ADR as
+"All Decision Records", allowing all teams to capture other important decisions using
+the same lightweight structure.
+
+ADRs are often underutilised in practice, so this CLI, along with the included
+templates, aims to make them easier to create and maintain.
 
 ## Table of Contents
 
@@ -76,13 +91,75 @@ CLI to manage Architecture Decision Records
 [//]: # (OPTIONAL IF documentation repo)
 [//]: # (ELSE REQUIRED)
 
-
+This will be available via all good ~~bookshops~~ package management tools.
 
 ## Usage
 [//]: # (REQUIRED)
 [//]: # (Explain what the thing does. Use screenshots and/or videos.)
 
+### Getting started
 
+`adr init`
+
+- Creates an empty `.adr.yaml` in repo root
+- Adds an ADR documenting the decision to use ADRs in `docs/adr`
+
+This is idempotent, so re-running when the files already exist will do nothing.
+
+### Templates
+
+#### Nygard
+The `nygard` template directly follows the recommendations set out in
+[DAD](https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions).
+It also includes section descriptions from the article verbatim.
+
+#### Extended
+The `extended` template extends the original format with additional subsections and 
+descriptions to help you write high context ADRs. Takes a bit of extra 
+work, but your future colleagues, and your future self, will be grateful.
+
+We did not want to go full [927](https://xkcd.com/927/) on this, so have stuck with
+the default of the `nygard` template. Nonetheless, in our experience, the extended
+template does offer more long term value, while staying within the spirit of the
+`nygard` recommendations.
+
+
+### Configuration
+
+In `.adr.yaml`, you can set,
+
+| Setting         | Description                                         | Default    | Valid options          | Recommended option  |
+|-----------------|-----------------------------------------------------|------------|------------------------|---------------------|
+| `directory`     | The directory where ADRs will be stored             | `docs/adr` | Any directory path     | default             |
+| `templateName`  | The name of the template that you wish to use       | `nygard`   | `nygard`, `extended`   | `extended`          |
+| `sequenceWidth` | The number of digits to use in the sequence number. | `4`        | positive integer       | default             |
+| `remoteConfig`  | shared remote config                                | empty      | any git file reference | use a remote config |
+
+Remote config allows you to set one config for your entire repo estate in a central 
+repo. It should be a `.yaml` file for clarity,  but `adr` will read whatever file 
+you set, assuming it is valid YAML and the keys are valid. Local config overrides 
+remote config.
+
+
+For backwards compatibility, if you already have a `.adr-dir` file, you can continue 
+using it. You can set,
+
+| Setting       | Description                                                                                   | Default   | Valid options      | Recommended option         |
+|---------------|-----------------------------------------------------------------------------------------------|-----------|--------------------|----------------------------|
+| File contents | The directory where ADRs will be stored. The `directory` value in .adr.yaml takes precedence. | `doc/adr` | Any directory path | `directory` in `.adr.yaml` |
+
+
+### Commands
+
+`adr new Use the Turbo Encabulator`
+
+This will create a new ADR named
+
+`docs/adr/0023-use-the-turbo-encabulator.md`
+
+The general filename convention is 
+
+`[adr dir]/[sequence]-[title].md`
 
 [//]: # (Extra sections)
 [//]: # (OPTIONAL)
@@ -136,7 +213,8 @@ PRs are welcome.
 
 ### Code
 
-All source code in this repository is licenced under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html). A
+All source code in this repository is licenced under the 
+[GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html). A
 copy of this is provided in the [LICENSE](LICENSE).
 
 ### Non-code content
